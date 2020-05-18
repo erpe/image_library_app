@@ -1,3 +1,14 @@
-body {
+@import '~bootstrap/scss/bootstrap.scss';
 
+body {
+  @extend .bg-dark;
+  @extend .text-light;
 }
+
+#IMAGE-LIBRARY-APP {
+
+  .header {
+    @extend .m-5;
+  }
+}
+

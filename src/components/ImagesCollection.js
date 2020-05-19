@@ -6,13 +6,14 @@ const ImagesCollection = (props) => {
   let renderable
 
   if (props.displayStyle === 'card') {
-    renderable = props.images.map((img) => {
-      return <ImageCard image={img} />
+    renderable = props.images.map((img, key) => {
+      return <ImageCard image={img} key={key}/>
     })
   }
 
   return(
-    <div className='row'>
+    <div className='card-columns'>
+      <p>Filter</p>
       {renderable}
     </div>
   )

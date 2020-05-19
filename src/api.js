@@ -1,5 +1,5 @@
 const imagesUrl = '/api/images'
-const variantsUrl = '/api/variants'
+//const variantsUrl = '/api/variants'
 
 
 

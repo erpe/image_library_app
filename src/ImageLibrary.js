@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import AppHeader from './components/AppHeader'
 import Navtabs from './components/Navtabs'
+import ImagesCollection from './components/ImagesCollection'
 import Api from './api'
 import './index.scss'
 
@@ -11,6 +12,7 @@ class ImageLibrary extends Component {
     super(props)
     this.state = {
       mode: 'loading',
+      displayStyle: 'card',
       images: [],
     }
     this.api = new Api(props.apiUrl, props.client, props.token)
@@ -64,6 +66,9 @@ class ImageLibrary extends Component {
     const listRender = (
       <div className='list-view'>
         <h2>Images</h2>
+        <ImagesCollection
+          images={this.state.images}
+          displayStyle={this.state.displayStyle}/>
       </div>
     )
 

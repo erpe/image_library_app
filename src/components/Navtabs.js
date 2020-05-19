@@ -3,24 +3,30 @@ import PropTypes from 'prop-types'
 
 const Navtabs = (props) => {
   return(
-    <ul className='nav nav-tabs'>
+    <ul className='nav nav-tabs mb-3'>
       <li className='nav-item'>
-        <a href='#' onClick={props.onAboutClick}
-           className={ props.active === 'about' ? "nav-link active" : "nav-link"}>
+        <button onClick={props.onAboutClick}
+           className={ props.active === 'about' ?
+             "btn btn-default nav-link active" :
+             "btn btn-default nav-link text-light"}>
            About
-        </a>
+        </button>
       </li>
       <li className='nav-item'>
-        <a href='#' onClick={props.onListClick}
-          className={ props.active === 'list' ? "nav-link active" : "nav-link"}>
+        <button onClick={props.onListClick}
+          className={ props.active === 'list' ?
+            "btn btn-default nav-link active" :
+            "btn btn-default nav-link text-light"}>
           List
-        </a>
+        </button>
       </li>
       <li className='nav-item'>
-        <a href='#' onClick={props.onNewClick}
-          className={props.active === 'new' ? 'nav-link active' : "nav-link" } >
+        <button onClick={props.onNewClick}
+          className={props.active === 'new' ?
+            'btn btn-default nav-link active' :
+            "btn btn-default nav-link text-light" } >
           New
-        </a>
+        </button>
       </li>
     </ul>
   )

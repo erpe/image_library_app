@@ -11,7 +11,7 @@ class Api {
   }
 
   makeImagesUrl = () => {
-    return this.host + '/api/images' + '?client=' + this.client
+    return this.host + imagesUrl + '?client=' + this.client
   }
 
   getImages = async () => {

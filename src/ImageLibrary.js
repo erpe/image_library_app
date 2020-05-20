@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import AppHeader from './components/AppHeader'
 import Navtabs from './components/Navtabs'
 import ImagesCollection from './components/ImagesCollection'
+import ImageForm from './components/ImageForm'
 import Api from './api'
 import './index.scss'
 
@@ -60,12 +61,14 @@ class ImageLibrary extends Component {
     const formRender = (
       <div className='new-form'>
         <h2>Create Image</h2>
+        <ImageForm />
       </div>
     )
 
     const listRender = (
       <div className='list-view'>
         <h2>Images</h2>
+        <p>Filter</p>
         <ImagesCollection
           images={this.state.images}
           displayStyle={this.state.displayStyle}/>

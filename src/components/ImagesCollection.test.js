@@ -1,10 +1,9 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, asFragment } from '@testing-library/react'
 import ImagesCollection from './ImagesCollection'
 
 
 test('renders ImagesCollection', () => {
-  const {getByText} = render(<ImagesCollection images={[]} displayStyle={'card'} />)
-  const ele = getByText(/Filter/)
-  expect(ele).toBeInTheDocument()
+  const {asFragment} = render(<ImagesCollection images={[]} displayStyle={'card'} />)
+  expect(asFragment()).toMatchSnapshot()
 })

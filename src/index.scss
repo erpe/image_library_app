@@ -8,7 +8,8 @@ body {
 #IMAGE-LIBRARY-APP {
 
   .header {
-    @extend .m-5;
+    @extend .mt-5;
+    @extend .mb-5;
   }
 
   .list-view {

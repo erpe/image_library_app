@@ -13,7 +13,6 @@ const ImagesCollection = (props) => {
 
   return(
     <div className='card-columns'>
-      <p>Filter</p>
       {renderable}
     </div>
   )

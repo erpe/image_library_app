@@ -9,6 +9,11 @@ const ImageCard = (props) => {
   // init state visible with false
   const [isVisible, setIsVisible] = useState(false)
 
+  const onDelete = () => {
+    console.log("onDelete...")
+    props.onDelete(img.id)
+  }
+
   return(
     <div className='card bg-dark shadow'
         onClick={ () => { setIsVisible(!isVisible)}}>
@@ -25,6 +30,7 @@ const ImageCard = (props) => {
               { img.url }
             </small>
           </p>
+          <button onClick={onDelete } className='btn btn-sm btn-danger'>Delete</button>
         </div>
       </SlideToggleContent>
 
@@ -34,6 +40,7 @@ const ImageCard = (props) => {
 
 ImageCard.propTypes = {
   image: PropTypes.object.isRequired,
+  onDelete: PropTypes.func.isRequired,
 }
 
 export default ImageCard

@@ -14,6 +14,10 @@ class Api {
     return this.host + imagesUrl + '?client=' + this.client
   }
 
+  destroyImageUrl = (id) => {
+    return this.host + imagesUrl + "/" + id
+  }
+
   getImages = async () => {
     let res = await fetch(this.makeImagesUrl(), {
       headers: {
@@ -33,6 +37,50 @@ class Api {
 
     catch (e) {
       throw new Error('content kein json: ' + e.message)
+    }
+  }
+
+
+  createImage = async (values) => {
+
+    let res = await fetch(this.makeImagesUrl(), {
+      headers: {
+        'Authorization': 'Bearer ' + this.token
+      },
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify(values)
+    })
+
+    try {
+      let image = await res.json()
+      if (res.ok) {
+        return image
+      } else {
+        throw new Error('Api Error: ' + JSON.stringify(image))
+      }
+    }
+
+    catch (e) {
+      throw new Error('content kein json: ' + e.message)
+    }
+  }
+
+  destroyImage = async (id) => {
+    const url = this.destroyImageUrl(id)
+    let res = await fetch(url, {
+      headers: {
+        'Authorization': 'Bearer ' + this.token
+      },
+      method: 'DELETE',
+      mode: 'cors'
+    })
+
+    if (res.status === 204) {
+      return true
+    } else {
+      console.error("RES: ", res)
+      throw new Error('Api Error: could not delete image ' + id )
     }
   }
 }

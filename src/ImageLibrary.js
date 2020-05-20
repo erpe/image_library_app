@@ -29,22 +29,30 @@ class ImageLibrary extends Component {
       })
   }
 
-  listClick = () => {
-    this.setState({
-      mode: 'list'
-    })
+
+  onCreateImage = async (values) => {
+    values['client'] = this.props.client
+    this.api.createImage(values)
+      .then((image) => {
+        let all = this.state.images
+        all = all.concat(image)
+        this.setState({
+          images: all,
+          mode: 'list',
+        })
+      })
   }
 
-  newClick = () => {
-    this.setState({
-      mode: 'new'
-    })
-  }
-
-  aboutClick = () => {
-    this.setState({
-      mode: 'about'
-    })
+  onDeleteImage = async (id) => {
+    console.log("ON Delete Image")
+    if ( await this.api.destroyImage(id) ) {
+      this.setState({
+        images: this.state.images.filter((img) => img.id !== id),
+        mode: 'list'
+      })
+    } else {
+      console.error("Error deleting image ", id)
+    }
   }
 
   render() {
@@ -61,7 +69,7 @@ class ImageLibrary extends Component {
     const formRender = (
       <div className='new-form'>
         <h2>Create Image</h2>
-        <ImageForm />
+        <ImageForm onSubmit={this.onCreateImage}/>
       </div>
     )
 
@@ -70,6 +78,7 @@ class ImageLibrary extends Component {
         <h2>Images</h2>
         <p>Filter</p>
         <ImagesCollection
+          onDelete={this.onDeleteImage }
           images={this.state.images}
           displayStyle={this.state.displayStyle}/>
       </div>
@@ -102,9 +111,9 @@ class ImageLibrary extends Component {
           <AppHeader client={this.props.client} />
 
           <Navtabs
-            onListClick={this.listClick}
-            onNewClick={this.newClick}
-            onAboutClick={this.aboutClick}
+            onListClick={ () => this.setState({mode: 'list'})}
+            onNewClick={() => this.setState({mode: 'new'})}
+            onAboutClick={() => this.setState({mode: 'about'})}
             active={this.state.mode}
           />
 

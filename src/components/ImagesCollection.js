@@ -7,7 +7,7 @@ const ImagesCollection = (props) => {
 
   if (props.displayStyle === 'card') {
     renderable = props.images.map((img, key) => {
-      return <ImageCard image={img} key={key}/>
+      return <ImageCard image={img} key={key} onDelete={props.onDelete}/>
     })
   }
 
@@ -21,6 +21,7 @@ const ImagesCollection = (props) => {
 ImagesCollection.propTypes = {
   displayStyle: PropTypes.string.isRequired,
   images: PropTypes.array.isRequired,
+  onDelete: PropTypes.func.isRequired,
 }
 
 export default ImagesCollection

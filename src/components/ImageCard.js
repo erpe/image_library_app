@@ -9,19 +9,6 @@ const ImageCard = (props) => {
   // init state visible with false
   const [isVisible, setIsVisible] = useState(false)
 
-  const onDelete = () => {
-    console.log("onDelete...")
-    props.onDelete(img.id)
-  }
-
-  const onEdit = () => {
-    props.onEdit(img)
-  }
-
-  const onShow = () => {
-    props.onShow(img)
-  }
-
   return(
     <div className='card bg-dark shadow'
         onClick={ () => { setIsVisible(!isVisible)}}>
@@ -38,9 +25,9 @@ const ImageCard = (props) => {
               { img.url }
             </small>
           </p>
-          <button onClick={onShow} className='btn btn-sm btn-outline-primary btn-block'>Show</button>
-          <button onClick={onEdit} className='btn btn-sm btn-outline-warning btn-block'>Edit</button>
-          <button onClick={onDelete } className='btn btn-sm btn-outline-danger btn-block'>Delete</button>
+          <button onClick={ () => props.onShow(img)} className='btn btn-sm btn-outline-primary btn-block'>Show</button>
+          <button onClick={ () => props.onEdit(img)} className='btn btn-sm btn-outline-warning btn-block'>Edit</button>
+          <button onClick={ () => props.onDelete(img.id) } className='btn btn-sm btn-outline-danger btn-block'>Delete</button>
         </div>
       </SlideToggleContent>
 

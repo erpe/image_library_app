@@ -37,7 +37,7 @@ const ImageForm = (props) => {
     }
   }
 
-  const onUpdate = async (values) => {
+  const onUpdate = (values) => {
     props.onSubmit(values)
   }
 

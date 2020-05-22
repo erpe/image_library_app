@@ -16,6 +16,7 @@ class ImageLibrary extends Component {
       mode: 'loading',
       displayStyle: 'card',
       images: [],
+      selectedImage: null,
     }
     this.api = new Api(props.apiUrl, props.client, props.token)
   }
@@ -128,9 +129,17 @@ class ImageLibrary extends Component {
     )
 
     const imageRender = (
+     this.selectedImage ?
       <div className='image-view'>
-        <ImageCard image={this.state.selectedImage} />
+        <ImageCard
+          image={this.state.selectedImage}
+          onShow={this.onShowImage}
+          onEdit={this.onEditImage}
+          onDelete={this.onDeleteImage}
+        />
       </div>
+      :
+      <></>
     )
 
     switch(this.state.mode) {

@@ -94,69 +94,47 @@ class ImageLibrary extends Component {
       </div>
     )
 
-    const formRender = (
-      <div className='new-form'>
-        <h2>Create Image</h2>
-        <ImageForm onSubmit={this.onCreateImage}/>
-      </div>
-    )
-
-    const imageFormEditRender = (
-      <div className='edit-form'>
-        <h2>Edit Image</h2>
-        <ImageForm image={this.state.selectedImage} onSubmit={this.onUpdateImage}/>
-      </div>
-    )
-
-    const listRender = (
-      <div className='list-view'>
-        <h2>Images</h2>
-        <p>Filter | Sort</p>
-        <ImagesCollection
-          onDelete={this.onDeleteImage }
-          images={this.state.images}
-          onShow={this.onShowImage}
-          onEdit={this.onEditImage}
-          displayStyle={this.state.displayStyle}/>
-      </div>
-    )
-
-
-    const aboutRender = (
-      <div className='about-view'>
-        <h2>About</h2>
-      </div>
-    )
-
-    const imageRender = (
-     this.selectedImage ?
-      <div className='image-view'>
-        <ImageCard
-          image={this.state.selectedImage}
-          onShow={this.onShowImage}
-          onEdit={this.onEditImage}
-          onDelete={this.onDeleteImage}
-        />
-      </div>
-      :
-      <></>
-    )
-
     switch(this.state.mode) {
       case 'list':
-        renderable = listRender
+        renderable =  <div className='list-view'>
+                        <h2>Images</h2>
+                        <p>Filter | Sort</p>
+                        <ImagesCollection
+                          onDelete={this.onDeleteImage }
+                          images={this.state.images}
+                          onShow={this.onShowImage}
+                          onEdit={this.onEditImage}
+                          displayStyle={this.state.displayStyle}/>
+                      </div>
         break
       case 'new':
-        renderable = formRender
+        renderable =  <div className='new-form'>
+                        <h2>Create Image</h2>
+                        <ImageForm onSubmit={this.onCreateImage}/>
+                      </div>
         break
       case 'about':
-        renderable = aboutRender
+        renderable =  <div className='about-view'>
+                        <h2>About</h2>
+                      </div>
         break
       case 'showImage':
-        renderable = imageRender
+        renderable =  <div className='image-view'>
+                        <ImageCard
+                          image={this.state.selectedImage}
+                          onShow={this.onShowImage}
+                          onEdit={this.onEditImage}
+                          onDelete={this.onDeleteImage}
+                        />
+                      </div>
         break
       case 'editImage':
-        renderable = imageFormEditRender
+        renderable =  <div className='edit-form'>
+                        <h2>Edit Image</h2>
+                        <ImageForm
+                          image={this.state.selectedImage}
+                          onSubmit={this.onUpdateImage}/>
+                      </div>
         break
       default:
         renderable = loadingRender

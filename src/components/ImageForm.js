@@ -27,8 +27,21 @@ const ImageForm = (props) => {
     }
   }
 
+  const onSubmit = (values) => {
+    if (props.image) {
+      console.log("choose update")
+      return onUpdate(values)
+    } else {
+      console.log("choose create")
+      return onCreate(values)
+    }
+  }
 
-  const onSubmit = async (values) => {
+  const onUpdate = async (values) => {
+    props.onSubmit(values)
+  }
+
+  const onCreate = async (values) => {
     const file = fileInput.current.files[0]
     const b64 = await toBase64(file)
 
@@ -60,9 +73,16 @@ const ImageForm = (props) => {
         <div className='form-group'>
           <Field name='copyright' className='form-control' placeholder='copyright'/>
         </div>
-        <div className='form-group'>
-          <input type='file' className='file' name='file' ref={fileInput} />
-        </div>
+        {
+          props.image ?
+          <p><img src={props.image.url}  className='img img-thumbnail' width='100' /></p>
+          :
+          <div className='form-group'>
+            <input type='file' className='file' name='file' ref={fileInput} />
+          </div>
+        }
+
+
         <button type='submit' className='btn btn-primary'>Submit</button>
       </Form>
     )}

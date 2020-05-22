@@ -14,6 +14,14 @@ const ImageCard = (props) => {
     props.onDelete(img.id)
   }
 
+  const onEdit = () => {
+    props.onEdit(img)
+  }
+
+  const onShow = () => {
+    props.onShow(img)
+  }
+
   return(
     <div className='card bg-dark shadow'
         onClick={ () => { setIsVisible(!isVisible)}}>
@@ -30,7 +38,9 @@ const ImageCard = (props) => {
               { img.url }
             </small>
           </p>
-          <button onClick={onDelete } className='btn btn-sm btn-danger'>Delete</button>
+          <button onClick={onShow} className='btn btn-sm btn-outline-primary btn-block'>Show</button>
+          <button onClick={onEdit} className='btn btn-sm btn-outline-warning btn-block'>Edit</button>
+          <button onClick={onDelete } className='btn btn-sm btn-outline-danger btn-block'>Delete</button>
         </div>
       </SlideToggleContent>
 
@@ -41,6 +51,8 @@ const ImageCard = (props) => {
 ImageCard.propTypes = {
   image: PropTypes.object.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onShow: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
 }
 
 export default ImageCard

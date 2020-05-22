@@ -18,6 +18,10 @@ class Api {
     return this.host + imagesUrl + "/" + id
   }
 
+  updateImageUrl = (id) => {
+    return this.host + imagesUrl + "/" + id
+  }
+
   getImages = async () => {
     let res = await fetch(this.makeImagesUrl(), {
       headers: {
@@ -48,6 +52,32 @@ class Api {
         'Authorization': 'Bearer ' + this.token
       },
       method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify(values)
+    })
+
+    try {
+      let image = await res.json()
+      if (res.ok) {
+        return image
+      } else {
+        throw new Error('Api Error: ' + JSON.stringify(image))
+      }
+    }
+
+    catch (e) {
+      throw new Error('content kein json: ' + e.message)
+    }
+  }
+
+
+  updateImage = async (id, values) => {
+
+    let res = await fetch(this.updateImageUrl(id), {
+      headers: {
+        'Authorization': 'Bearer ' + this.token
+      },
+      method: 'PATCH',
       mode: 'cors',
       body: JSON.stringify(values)
     })

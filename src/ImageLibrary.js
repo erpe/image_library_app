@@ -4,6 +4,7 @@ import AppHeader from './components/AppHeader'
 import Navtabs from './components/Navtabs'
 import ImagesCollection from './components/ImagesCollection'
 import ImageForm from './components/ImageForm'
+import ImageCard from './components/ImageCard'
 import Api from './api'
 import './index.scss'
 
@@ -24,7 +25,8 @@ class ImageLibrary extends Component {
       .then((images) => {
         this.setState({
           images: images,
-          mode: 'about'
+          mode: 'about',
+          selectedImage: null,
         })
       })
   }
@@ -43,6 +45,17 @@ class ImageLibrary extends Component {
       })
   }
 
+  onUpdateImage = async (values) => {
+    this.api.updateImage(this.state.selectedImage.id, values)
+      .then((image) => {
+        let filtered = this.state.images.filter((img) => img.id !== image.id)
+        this.setState({
+          images: filtered.concat(image),
+          mode: 'list',
+        })
+      })
+  }
+
   onDeleteImage = async (id) => {
     console.log("ON Delete Image")
     if ( await this.api.destroyImage(id) ) {
@@ -53,6 +66,20 @@ class ImageLibrary extends Component {
     } else {
       console.error("Error deleting image ", id)
     }
+  }
+
+  onShowImage = async (img) => {
+    this.setState({
+      mode: 'showImage',
+      selectedImage: img
+    })
+  }
+
+  onEditImage = async (img) => {
+    this.setState({
+      mode: 'editImage',
+      selectedImage: img
+    })
   }
 
   render() {
@@ -73,13 +100,22 @@ class ImageLibrary extends Component {
       </div>
     )
 
+    const imageFormEditRender = (
+      <div className='edit-form'>
+        <h2>Edit Image</h2>
+        <ImageForm image={this.state.selectedImage} onSubmit={this.onUpdateImage}/>
+      </div>
+    )
+
     const listRender = (
       <div className='list-view'>
         <h2>Images</h2>
-        <p>Filter</p>
+        <p>Filter | Sort</p>
         <ImagesCollection
           onDelete={this.onDeleteImage }
           images={this.state.images}
+          onShow={this.onShowImage}
+          onEdit={this.onEditImage}
           displayStyle={this.state.displayStyle}/>
       </div>
     )
@@ -88,6 +124,12 @@ class ImageLibrary extends Component {
     const aboutRender = (
       <div className='about-view'>
         <h2>About</h2>
+      </div>
+    )
+
+    const imageRender = (
+      <div className='image-view'>
+        <ImageCard image={this.state.selectedImage} />
       </div>
     )
 
@@ -100,6 +142,12 @@ class ImageLibrary extends Component {
         break
       case 'about':
         renderable = aboutRender
+        break
+      case 'showImage':
+        renderable = imageRender
+        break
+      case 'editImage':
+        renderable = imageFormEditRender
         break
       default:
         renderable = loadingRender

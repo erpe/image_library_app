@@ -4,7 +4,7 @@ import AppHeader from './components/AppHeader'
 import Navtabs from './components/Navtabs'
 import ImagesCollection from './components/ImagesCollection'
 import ImageForm from './components/ImageForm'
-import ImageCard from './components/ImageCard'
+import Image from './components/Image'
 import Api from './api'
 import './index.scss'
 
@@ -46,6 +46,23 @@ class ImageLibrary extends Component {
       })
   }
 
+
+  onCreateVariant = async (format) => {
+    this.api.createVariant(this.state.selectedImage, format)
+      .then((variant) => {
+        let toUpdate = this.state.images.find(img => img.id === this.state.selectedImage.id)
+        let vars = toUpdate.variants
+        vars.push(variant)
+        toUpdate.variants = vars
+        let filtered = this.state.images.filter(img => img.id !== this.state.selectedImage.id)
+        filtered.push(toUpdate)
+        this.setState({
+          images: filtered,
+          selectedImage: toUpdate
+        })
+      })
+  }
+
   onUpdateImage = async (values) => {
     this.api.updateImage(this.state.selectedImage.id, values)
       .then((image) => {
@@ -58,7 +75,6 @@ class ImageLibrary extends Component {
   }
 
   onDeleteImage = async (id) => {
-    console.log("ON Delete Image")
     if ( await this.api.destroyImage(id) ) {
       this.setState({
         images: this.state.images.filter((img) => img.id !== id),
@@ -69,6 +85,22 @@ class ImageLibrary extends Component {
     }
   }
 
+  onDeleteVariant = async (variant)  => {
+    let imgId = variant.image_id
+    let image = this.state.images.find((img) => img.id === variant.image_id)
+    image.variants = image.variants.filter((v) => v.id !== variant.id)
+    let images = this.state.images.filter((img) => img.id !== imgId)
+    images.push(image)
+    if ( await this.api.destroyVariant(variant.id) ) {
+      this.setState({
+        images: images,
+        selectedImage: image,
+        mode: 'showImage',
+      })
+    } else {
+      console.error("Error deleting variant ", variant.id)
+    }
+  }
   onShowImage = async (img) => {
     this.setState({
       mode: 'showImage',
@@ -120,11 +152,14 @@ class ImageLibrary extends Component {
         break
       case 'showImage':
         renderable =  <div className='image-view'>
-                        <ImageCard
+                        <Image
                           image={this.state.selectedImage}
                           onShow={this.onShowImage}
                           onEdit={this.onEditImage}
                           onDelete={this.onDeleteImage}
+                          formats={this.props.formats}
+                          onCreateVariant={this.onCreateVariant}
+                          onDeleteVariant={this.onDeleteVariant}
                         />
                       </div>
         break
@@ -163,6 +198,7 @@ ImageLibrary.propTypes = {
   client: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
   apiUrl: PropTypes.string.isRequired,
+  formats: PropTypes.array.isRequired,
 }
 
 export default ImageLibrary;

@@ -75,7 +75,7 @@ const ImageForm = (props) => {
         </div>
         {
           props.image ?
-          <p><img src={props.image.url}  className='img img-thumbnail' width='100' /></p>
+          <p><img src={props.image.url}  alt={props.image.alt} className='img img-thumbnail' width='100' /></p>
           :
           <div className='form-group'>
             <input type='file' className='file' name='file' ref={fileInput} />

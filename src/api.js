@@ -1,4 +1,6 @@
 const imagesUrl = '/api/images'
+const variantsUrl = '/api/variants'
+
 //const variantsUrl = '/api/variants'
 
 
@@ -12,6 +14,14 @@ class Api {
 
   makeImagesUrl = () => {
     return this.host + imagesUrl + '?client=' + this.client
+  }
+
+  variantsUrl = (id) => {
+    return this.host + imagesUrl + "/" + id + "/variants"
+  }
+
+  destroyVariantUrl = (id) => {
+    return this.host + variantsUrl + "/" + id
   }
 
   destroyImageUrl = (id) => {
@@ -111,6 +121,48 @@ class Api {
     } else {
       console.error("RES: ", res)
       throw new Error('Api Error: could not delete image ' + id )
+    }
+  }
+
+  createVariant = async (image, format) => {
+    let res = await fetch(this.variantsUrl(image.id), {
+      headers: {
+        'Authorization': 'Bearer ' + this.token
+      },
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify(format)
+    })
+
+    try {
+      let variant = await res.json()
+      if (res.ok) {
+        return variant
+      } else {
+        throw new Error('Api Error: ' + JSON.stringify(variant))
+      }
+    }
+
+    catch (e) {
+      throw new Error('content kein json: ' + e.message)
+    }
+  }
+
+  destroyVariant = async (id) => {
+    const url = this.destroyVariantUrl(id)
+    let res = await fetch(url, {
+      headers: {
+        'Authorization': 'Bearer ' + this.token
+      },
+      method: 'DELETE',
+      mode: 'cors'
+    })
+
+    if (res.status === 204) {
+      return true
+    } else {
+      console.error("RES: ", res)
+      throw new Error('Api Error: could not delete variant ' + id )
     }
   }
 }

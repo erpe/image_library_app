@@ -9,6 +9,7 @@ const ImagesCollection = (props) => {
     renderable = props.images.map((img, key) => {
       return (
         <ImageCard
+          version={'preview'}
           image={img}
           key={key}
           onDelete={props.onDelete}

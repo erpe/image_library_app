@@ -11,8 +11,13 @@ const ImageCard = (props) => {
 
   // instead original image.url
   // show preview variant.url
-  const extractPreviewUrl = () => {
-    const vars = img.variants.filter((variant) =>  variant.name === 'preview')
+  const extractVersionUrl = (version) => {
+
+    if (version === 'original') {
+      return img.url
+    }
+
+    const vars = img.variants.filter((variant) =>  variant.name === version)
     if (vars.length === 1) {
       return vars[0].url
     } else {
@@ -24,7 +29,7 @@ const ImageCard = (props) => {
     <div className='card bg-dark shadow'
         onClick={ () => { setIsVisible(!isVisible)}}>
 
-      <img src={extractPreviewUrl()} alt={img.alt} className='card-img-top' />
+      <img src={extractVersionUrl(props.version)} alt={img.alt} className='card-img-top' />
 
       <SlideToggleContent isVisible={isVisible}>
         <div className='card-body'>
@@ -54,6 +59,7 @@ ImageCard.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onShow: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
+  version: PropTypes.string.isRequired,
 }
 
 export default ImageCard

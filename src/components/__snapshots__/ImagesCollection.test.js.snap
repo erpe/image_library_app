@@ -2,8 +2,65 @@
 
 exports[`renders ImagesCollection 1`] = `
 <DocumentFragment>
-  <div
-    class="card-columns"
-  />
+  <div>
+    <div
+      class="form-inline mb-3"
+    >
+      <button
+        class="btn btn-sm btn-outline-light mr-3"
+      >
+        List as table
+      </button>
+      <label
+        class="label mr-1"
+        for="category"
+      >
+        Filter by
+      </label>
+      <select
+        class="form-control form-control-sm bg-dark text-light mr-3"
+        name="category"
+      >
+        <option
+          value="reset"
+        >
+           -- Select Category --
+        </option>
+      </select>
+      <label
+        class="mr-1"
+        for="sort"
+      >
+        Sort by
+      </label>
+      <select
+        class="form-control form-control-sm bg-dark text-light"
+      >
+        <option
+          value="reset"
+        >
+          -- Select Sort --
+        </option>
+        <option
+          value="alt"
+        >
+          Alt
+        </option>
+        <option
+          value="category"
+        >
+          Category
+        </option>
+        <option
+          value="copyright"
+        >
+          Copyright
+        </option>
+      </select>
+    </div>
+    <div
+      class="card-columns"
+    />
+  </div>
 </DocumentFragment>
 `;

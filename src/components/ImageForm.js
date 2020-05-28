@@ -78,12 +78,12 @@ const ImageForm = (props) => {
           <p><img src={props.image.url}  alt={props.image.alt} className='img img-thumbnail' width='100' /></p>
           :
           <div className='form-group'>
-            <input type='file' className='file' name='file' ref={fileInput} />
+            <input type='file' className='form-control-file' name='file' ref={fileInput} />
           </div>
         }
 
 
-        <button type='submit' className='btn btn-primary'>Submit</button>
+        <button type='submit' className='btn btn-outline-primary'>Submit</button>
       </Form>
     )}
   </Formik>

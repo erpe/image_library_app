@@ -42,14 +42,19 @@ const ImageCard = (props) => {
             </small>
           </p>
           <button onClick={ () => props.onShow(img)}
-            className='btn btn-sm btn-outline-primary btn-block'>Show</button>
+            className='btn btn-sm btn-outline-primary btn-block'>
+            Show
+          </button>
           <button onClick={ () => props.onEdit(img)}
-            className='btn btn-sm btn-outline-warning btn-block'>Edit</button>
+            className='btn btn-sm btn-outline-warning btn-block'>
+            Edit
+          </button>
           <button onClick={ () => props.onDelete(img.id) }
-            className='btn btn-sm btn-outline-danger btn-block'>Delete</button>
+            className='btn btn-sm btn-outline-danger btn-block'>
+            Delete
+          </button>
         </div>
       </SlideToggleContent>
-
     </div>
   )
 }

@@ -17,6 +17,8 @@ test('renders Image', () => {
       formats={[]}
       onCreateVariant={jest.fn}
       onDeleteVariant={jest.fn}
+      onEdit={jest.fn}
+      onDelete={jest.fn}
     />)
   const arr = getAllByText(/some text/)
   expect(arr[0]).toBeInTheDocument()

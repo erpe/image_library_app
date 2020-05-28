@@ -13,7 +13,7 @@ const VariantList = (props) => {
           <td>{v.width}x{v.height}</td>
           <td>{v.url}</td>
           <td>
-            <button className='btn btn-sm btn-danger' onClick={() => props.onDeleteVariant(v)}>
+            <button className='btn btn-sm btn-outline-danger' onClick={() => props.onDeleteVariant(v)}>
             Delete
             </button>
           </td>

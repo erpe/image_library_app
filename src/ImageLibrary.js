@@ -130,13 +130,11 @@ class ImageLibrary extends Component {
       case 'list':
         renderable =  <div className='list-view'>
                         <h2>Images</h2>
-                        <p>Filter | Sort</p>
                         <ImagesCollection
                           onDelete={this.onDeleteImage }
                           images={this.state.images}
                           onShow={this.onShowImage}
-                          onEdit={this.onEditImage}
-                          displayStyle={this.state.displayStyle}/>
+                          onEdit={this.onEditImage}/>
                       </div>
         break
       case 'new':

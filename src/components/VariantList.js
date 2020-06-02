@@ -17,7 +17,7 @@ const VariantList = (props) => {
           <td>{v.id}</td>
           <td>{v.name}</td>
           <td className='text-nowrap'>{v.width}x{v.height}</td>
-          <td className='text-nowrap'><a href={v.url} target='_blank'>{v.url}</a></td>
+          <td className='text-nowrap'><a href={v.url} target='_blank' rel='noopener noreferrer'>{v.url}</a></td>
           <td className='text-nowrap text-right'>
             <button className='btn btn-sm btn-outline-info'
               onClick={() => copyUrl(v.url)} >

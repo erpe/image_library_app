@@ -6,7 +6,6 @@ import ImageRow from './ImageRow'
 const ImagesCollection = (props) => {
 
   const [images, setImages] = useState(props.images)
-  const [category, setCategory] = useState(null)
   const [displayStyle, setDisplayStyle] = useState('card')
   const [sort, setSort] = useState('reset')
 
@@ -15,14 +14,12 @@ const ImagesCollection = (props) => {
 
   const categories = [...new Set(props.images.map((img) => img.category))]
 
-  const filterCategory = (category) => {
+  const filterCategory = (cat) => {
     setSort('reset')
-    if (category === 'reset') {
-      setCategory(null)
+    if (cat === 'reset') {
       setImages(props.images)
     } else {
-      setCategory(category)
-      setImages(props.images.filter((img) =>  img.category === category))
+      setImages(props.images.filter((img) =>  img.category === cat))
     }
   }
 

@@ -15,7 +15,7 @@ const Image = (props) => {
       return(
         <button key={k}
           onClick={() => props.onCreateVariant(f)}
-          className='btn btn-outline-light mr-2'>
+          className='btn btn-outline-light mr-2 mb-3'>
           Create '{f.name}'
         </button>
       )
@@ -25,22 +25,24 @@ const Image = (props) => {
 
   return(
     <React.Fragment>
+      <h2>{img.alt}</h2>
       <div className='row mb-3'>
-        <div className='col-md-4'>
-        <h2>{img.alt}</h2>
+        <div className='col-md-3'>
           <p>
             &copy; {img.copyright}<br />
             Width: {img.width} <br />
             Height: {img.height} <br />
             Alt: {img.alt}<br />
           </p>
+        </div>
+        <div className='col-md-9'>
           <ReactMarkdown source={img.notes} />
         </div>
-        <div className='col-md-8'>
-          <h3>Variants</h3>
-          <VariantList variants={variants} onDeleteVariant={props.onDeleteVariant}/>
-          {variantActions}
-        </div>
+      </div>
+      <div className='mb-3'>
+        <h3>Variants</h3>
+        {variantActions}
+        <VariantList variants={variants} onDeleteVariant={props.onDeleteVariant}/>
       </div>
       <div className='mb-3'>
       <button

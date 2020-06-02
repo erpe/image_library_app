@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import VariantList from './VariantList'
+import ReactMarkdown from 'react-markdown'
 
 const Image = (props) => {
   const img = props.image
@@ -28,11 +29,12 @@ const Image = (props) => {
         <div className='col-md-4'>
         <h2>{img.alt}</h2>
           <p>
-            &copy;: {img.copyright}<br />
+            &copy; {img.copyright}<br />
             Width: {img.width} <br />
             Height: {img.height} <br />
             Alt: {img.alt}<br />
           </p>
+          <ReactMarkdown source={img.notes} />
         </div>
         <div className='col-md-8'>
           <h3>Variants</h3>

@@ -6,7 +6,6 @@ import 'react-toastify/dist/ReactToastify.css'
 const VariantList = (props) => {
 
   const copyUrl = (url) => {
-    console.log("copy to clipboard: ", url)
     navigator.clipboard.writeText(url)
     toast("url copied to clipboard...")
   }

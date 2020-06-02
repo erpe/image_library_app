@@ -15,6 +15,7 @@ const ImageForm = (props) => {
       category: img.category,
       copyright: img.copyright,
       file: '',
+      notes: img.notes,
       //client: img.client,
     }
   } else {
@@ -23,6 +24,7 @@ const ImageForm = (props) => {
       category: '',
       copyright: '',
       file: '',
+      notes: '',
       //client:
     }
   }
@@ -72,6 +74,9 @@ const ImageForm = (props) => {
         </div>
         <div className='form-group'>
           <Field name='copyright' className='form-control' placeholder='copyright'/>
+        </div>
+        <div className='form-group'>
+          <Field name='notes' as='textarea' className='form-control' placeholder='notes - e.g. where is this image used' />
         </div>
         {
           props.image ?

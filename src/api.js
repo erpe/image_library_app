@@ -1,19 +1,24 @@
 const imagesUrl = '/api/images'
 const variantsUrl = '/api/variants'
-
-//const variantsUrl = '/api/variants'
-
-
+const clientsUrl = '/api/clients'
 
 class Api {
-  constructor(host, client, token) {
+  constructor(host, token, client) {
     this.host = host
     this.client = client
     this.token = token
   }
 
   makeImagesUrl = () => {
-    return this.host + imagesUrl + '?client=' + this.client
+    if (this.client) {
+      return this.host + imagesUrl + '?client=' + this.client
+    } else {
+      return this.host + imagesUrl
+    }
+  }
+
+  getClientsUrl = () => {
+    return this.host + clientsUrl
   }
 
   variantsUrl = (id) => {
@@ -30,6 +35,30 @@ class Api {
 
   updateImageUrl = (id) => {
     return this.host + imagesUrl + "/" + id
+  }
+
+  getClients = async () => {
+    let res = await fetch(this.getClientsUrl(), {
+      headers: {
+        'Authorization': 'Bearer ' + this.token
+      },
+      mode: 'cors'
+    })
+
+    try {
+
+      let clientStats = await res.json()
+      if (res.ok) {
+        return clientStats
+      } else {
+        throw new Error('Api Error: ', JSON.stringify(clientStats))
+      }
+    }
+
+    catch (e) {
+      console.error(e.message)
+      throw new Error('content kein json: ' + e.message)
+    }
   }
 
   getImages = async () => {

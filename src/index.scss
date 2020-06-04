@@ -5,7 +5,8 @@ body {
   @extend .text-light;
 }
 
-#IMAGE-LIBRARY-APP {
+#IMAGE-LIBRARY-APP,
+#IMAGE-LIBRARY-ADMIN {
 
   .header {
     @extend .mt-5;

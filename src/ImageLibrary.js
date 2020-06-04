@@ -18,7 +18,7 @@ class ImageLibrary extends Component {
       images: [],
       selectedImage: null,
     }
-    this.api = new Api(props.apiUrl, props.client, props.token)
+    this.api = new Api(props.apiUrl, props.token, props.client)
   }
 
   componentDidMount() {
@@ -26,12 +26,29 @@ class ImageLibrary extends Component {
       .then((images) => {
         this.setState({
           images: images,
-          mode: 'about',
+          mode: 'list',
           selectedImage: null,
         })
       })
   }
 
+
+  componentDidUpdate(prevProps) {
+    if (this.props.client !== prevProps.client) {
+      this.api = new Api(this.props.apiUrl, this.props.token, this.props.client)
+      this.api.getImages()
+        .then((images) => {
+          this.setState({
+            images: images,
+            mode: 'list',
+            selectedImage: null,
+          })
+        })
+      this.setState({
+        //mode: 'list'
+      })
+    }
+  }
 
   onCreateImage = async (values) => {
     values['client'] = this.props.client
@@ -134,7 +151,8 @@ class ImageLibrary extends Component {
                           onDelete={this.onDeleteImage }
                           images={this.state.images}
                           onShow={this.onShowImage}
-                          onEdit={this.onEditImage}/>
+                          onEdit={this.onEditImage}
+                        />
                       </div>
         break
       case 'new':
@@ -174,19 +192,17 @@ class ImageLibrary extends Component {
     }
 
     return (
-      <div className='image-library'>
-        <div className='container'>
-          <AppHeader client={this.props.client} />
+      <div className='image-library p-3'>
+        <AppHeader client={this.props.client} />
 
-          <Navtabs
-            onListClick={ () => this.setState({mode: 'list'})}
-            onNewClick={() => this.setState({mode: 'new'})}
-            onAboutClick={() => this.setState({mode: 'about'})}
-            active={this.state.mode}
-          />
+        <Navtabs
+          onListClick={ () => this.setState({mode: 'list'})}
+          onNewClick={() => this.setState({mode: 'new'})}
+          onAboutClick={() => this.setState({mode: 'about'})}
+          active={this.state.mode}
+        />
 
-          {renderable}
-        </div>
+        {renderable}
       </div>
     )
   }

@@ -12,7 +12,7 @@ const AppHeader = (props) => {
 
 
 AppHeader.propTypes = {
-  client: PropTypes.string.isRequired,
+  client: PropTypes.string,
 }
 
 export default AppHeader

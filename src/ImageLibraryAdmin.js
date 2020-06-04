@@ -57,7 +57,7 @@ class ImageLibraryAdmin extends Component {
 
     return(
       <div className='image-library-admin'>
-        <div className='form-group'>
+        <div className='form-group p-3'>
           <label className='label'>What client you want?</label>
           <select
             name='client'

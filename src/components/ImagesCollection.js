@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import ImageCard from './ImageCard'
 import ImageRow from './ImageRow'
@@ -11,6 +11,11 @@ const ImagesCollection = (props) => {
 
   let renderable
   let style
+
+
+  useEffect(() => {
+    setImages(props.images)
+  }, [props.images])
 
   const categories = [...new Set(props.images.map((img) => img.category))]
 
@@ -91,7 +96,7 @@ const ImagesCollection = (props) => {
   }
 
   const categoryOptions = () => {
-    return categories.sort().map((cat) => <option value={cat}>{cat}</option>)
+    return categories.sort().map((cat, k) => <option key={k} value={cat}>{cat}</option>)
   }
 
   return(

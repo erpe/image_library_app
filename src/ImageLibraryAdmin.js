@@ -8,12 +8,16 @@ class ImageLibraryAdmin extends Component {
     super(props)
     this.state = {
       clientStats: [],
-      clients: [],
+
+      clients: props.config.map((cfg) => cfg.client),
       selectedClient: null,
+      // config contains client => formats => width, height, format, name
       config: props.config,
       activeFormats: [],
     }
   }
+
+  // FIXME: is :config or :clientStats single point of truth
 
   componentDidMount() {
     const api = new Api(this.props.apiUrl, this.props.token, null)
@@ -21,8 +25,9 @@ class ImageLibraryAdmin extends Component {
       .then((clientStats) => {
         this.setState({
           selectedClient: null,
+          // clientStats contains: client => images.count
           clientStats: clientStats,
-          clients: clientStats.map((cl) => cl.client)
+          //clients: clientStats.map((cl) => cl.client)
         })
       })
   }

@@ -10,11 +10,7 @@ class Api {
   }
 
   makeImagesUrl = () => {
-    if (this.client) {
-      return this.host + imagesUrl + '?client=' + this.client
-    } else {
-      return this.host + imagesUrl
-    }
+    return this.host + imagesUrl
   }
 
   getClientsUrl = () => {

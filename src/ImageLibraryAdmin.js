@@ -63,7 +63,7 @@ class ImageLibraryAdmin extends Component {
     return(
       <div className='image-library-admin'>
         <div className='form-group p-3'>
-          <label className='label'>What client you want?</label>
+          <label className='label'>As which client do you want to masquerade?</label>
           <select
             name='client'
             onChange={(evt) => this.onSelectClient(evt.target.value)}

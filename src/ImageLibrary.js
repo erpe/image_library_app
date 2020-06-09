@@ -51,21 +51,27 @@ class ImageLibrary extends Component {
   }
 
   onCreateImage = async (values) => {
-    values['client'] = this.props.client
-    this.api.createImage(values)
-      .then((image) => {
-        let all = this.state.images
-        all = all.concat(image)
-        this.setState({
-          images: all,
-          mode: 'list',
-        })
-      })
+    let image = await this.api.createImage(values)
+    let preview = await this.api.createVariant(image, {
+      width: 150,
+      height: 150,
+      format: 'jpeg',
+      name: 'preview',
+      client: 'image_library'
+    })
+    image.variants = [preview]
+    let all = this.state.images
+    all = all.concat(image)
+    this.setState({
+      images: all,
+      mode: 'list',
+    })
   }
 
 
   onCreateVariant = async (format) => {
-    this.api.createVariant(this.state.selectedImage, format)
+    const formatForClient = Object.assign({}, format, { client: this.props.client })
+    this.api.createVariant(this.state.selectedImage, formatForClient)
       .then((variant) => {
         let toUpdate = this.state.images.find(img => img.id === this.state.selectedImage.id)
         let vars = toUpdate.variants
@@ -170,6 +176,7 @@ class ImageLibrary extends Component {
         renderable =  <div className='image-view'>
                         <Image
                           image={this.state.selectedImage}
+                          client={this.props.client}
                           onShow={this.onShowImage}
                           onEdit={this.onEditImage}
                           onDelete={this.onDeleteImage}

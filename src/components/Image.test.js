@@ -11,9 +11,10 @@ test('renders Image', () => {
     url: "http://example.com/img/1.jpg",
     variants: [],
   }
-  const {getAllByText} = render(
+  const {getAllByText, getByText} = render(
     <Image
       image={img}
+      client={"test"}
       formats={[]}
       onCreateVariant={jest.fn}
       onDeleteVariant={jest.fn}
@@ -22,4 +23,6 @@ test('renders Image', () => {
     />)
   const arr = getAllByText(/some text/)
   expect(arr[0]).toBeInTheDocument()
+  const needle = getByText(/No Variant available/)
+  expect(needle).toBeInTheDocument()
 })

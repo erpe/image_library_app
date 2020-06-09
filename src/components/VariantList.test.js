@@ -4,7 +4,7 @@ import VariantList from './VariantList'
 
 
 test('renders VariantList', () => {
-  const {getByText} = render(<VariantList variants={[]} />)
-  const needle = getByText(/None available/)
+  const {getByText} = render(<VariantList variants={[{ name: 'my_variant' }]} />)
+  const needle = getByText(/my_variant/)
   expect(needle).toBeInTheDocument()
 })

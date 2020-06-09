@@ -4,21 +4,36 @@ import VariantList from './VariantList'
 import ReactMarkdown from 'react-markdown'
 
 const Image = (props) => {
-
-  const variantNames = props.image.variants.map(v => v.name)
+  const clientVariants = props.image.variants.filter(v => v.client === props.client)
+  const otherClientsWithVariants = props.image.variants.filter(v => !['image_library', props.client].includes(v.client)).map(v => v.client)
+  const variantNames = clientVariants.map(v => v.name)
 
   const variantActions = props.formats.map((f, k)=> {
     if (!variantNames.includes(f.name)) {
       return(
         <button key={k}
-          onClick={() => props.onCreateVariant(f)}
-          className='btn btn-outline-light mr-2 mb-3'>
+                onClick={() => props.onCreateVariant(f)}
+                className='btn btn-outline-light mr-2 mb-3'>
           Create '{f.name}'
         </button>
       )
     }
     return ""
   })
+
+  const otherClientsList = otherClientsWithVariants.map((c) =>
+    (<><span className='badge badge-info'>{c}</span><span>&nbsp;</span></>)
+  )
+
+  let variantList = (
+    <React.Fragment>
+      <p>No Variant available</p>
+    </React.Fragment>
+  )
+
+  if (clientVariants.length > 0) {
+    variantList = (<VariantList variants={clientVariants} onDeleteVariant={props.onDeleteVariant}/>)
+  }
 
   return(
     <React.Fragment>
@@ -39,19 +54,20 @@ const Image = (props) => {
       <div className='mb-3'>
         <h3>Variants</h3>
         {variantActions}
-        <VariantList variants={props.image.variants} onDeleteVariant={props.onDeleteVariant}/>
+        {variantList}
+        <strong>Has variants for these clients</strong> {otherClientsList}
       </div>
       <div className='mb-3'>
-      <button
-        onClick={() => props.onEdit(props.image)}
-        className='btn btn-outline-warning mr-3'>
-        Edit
-      </button>
-      <button
-        onClick={() => props.onDelete(props.image.id)}
-        className='btn btn-outline-danger'>
-        Delete
-      </button>
+        <button
+          onClick={() => props.onEdit(props.image)}
+          className='btn btn-outline-warning mr-3'>
+          Edit
+        </button>
+        <button
+          onClick={() => props.onDelete(props.image.id)}
+          className='btn btn-outline-danger'>
+          Delete
+        </button>
       </div>
       <img src={props.image.url} alt={props.image.alt} className='img img-fluid'/>
     </React.Fragment>
@@ -60,6 +76,7 @@ const Image = (props) => {
 
 Image.propTypes = {
   image: PropTypes.object.isRequired,
+  client: PropTypes.string.isRequired,
   formats: PropTypes.array.isRequired,
   onCreateVariant: PropTypes.func.isRequired,
   onDeleteVariant: PropTypes.func.isRequired,

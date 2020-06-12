@@ -11,27 +11,23 @@ const VariantList = (props) => {
   }
 
   const rows = props.variants.map((v, key) => {
-    if (v.client !== 'image_library') {
-      return(
-        <tr key={key}>
-          <td>{v.id}</td>
-          <td>{v.client}</td>
-          <td>{v.name}</td>
-          <td className='text-nowrap'>{v.width}x{v.height}</td>
-          <td className='text-nowrap'><a href={v.url} target='_blank' rel='noopener noreferrer'>{v.url}</a></td>
-          <td className='text-nowrap text-right'>
-            <button className='btn btn-sm btn-outline-info'
-                    onClick={() => copyUrl(v.url)} >
-              Copy 2 Clipboard
-            </button>&nbsp;
-            <button className='btn btn-sm btn-outline-danger' onClick={() => props.onDeleteVariant(v)}>
-              Delete
-            </button>
-          </td>
-        </tr>
-      )
-    }
-    return ""
+    return(
+      <tr key={key}>
+        <td>{v.id}</td>
+        <td>{v.name}</td>
+        <td className='text-nowrap'>{v.width}x{v.height}</td>
+        <td className='text-nowrap'><a href={v.url} target='_blank' rel='noopener noreferrer'>{v.url}</a></td>
+        <td className='text-nowrap text-right'>
+          <button className='btn btn-sm btn-outline-info'
+                  onClick={() => copyUrl(v.url)} >
+            Copy 2 Clipboard
+          </button>&nbsp;
+      <button className='btn btn-sm btn-outline-danger' onClick={() => props.onDeleteVariant(v)}>
+        Delete
+      </button>
+        </td>
+      </tr>
+    )
   })
 
   return(

@@ -55,9 +55,10 @@ class ImageLibrary extends Component {
     let preview = await this.api.createVariant(image, {
       width: 150,
       height: 150,
+      mode: 'fit',
       format: 'jpeg',
       name: 'preview',
-      client: 'image_library'
+      client: '_internal'
     })
     image.variants = [preview]
     let all = this.state.images
@@ -70,7 +71,10 @@ class ImageLibrary extends Component {
 
 
   onCreateVariant = async (format) => {
-    const formatForClient = Object.assign({}, format, { client: this.props.client })
+    // NOTE: Unless format specifies `mode` we default to crop images to given format dimensions.
+    // This has to be explicit here, as the API default is resize to `fit`.
+    // NOTE: In any case we override any (mistakenly) set client.
+    const formatForClient = Object.assign({ mode: 'fill' }, format, { client: this.props.client }) 
     this.api.createVariant(this.state.selectedImage, formatForClient)
       .then((variant) => {
         let toUpdate = this.state.images.find(img => img.id === this.state.selectedImage.id)

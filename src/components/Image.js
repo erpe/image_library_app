@@ -5,7 +5,6 @@ import ReactMarkdown from 'react-markdown'
 
 const Image = (props) => {
   const clientVariants = props.image.variants.filter(v => v.client === props.client)
-  const otherClientsWithVariants = props.image.variants.filter(v => !['image_library', props.client].includes(v.client)).map(v => v.client)
   const variantNames = clientVariants.map(v => v.name)
 
   const variantActions = props.formats.map((f, k)=> {
@@ -21,9 +20,12 @@ const Image = (props) => {
     return ""
   })
 
-  const otherClientsList = otherClientsWithVariants.map((c) =>
-    (<><span className='badge badge-info'>{c}</span><span>&nbsp;</span></>)
-  )
+  const variantMap = {}
+  props.image.variants.forEach(v => {
+    variantMap[v.client] = v
+  })
+  const clients = Object.keys(variantMap).filter(c => c !== '_internal')
+
 
   let variantList = (
     <React.Fragment>
@@ -45,7 +47,18 @@ const Image = (props) => {
             Width: {props.image.width} <br />
             Height: {props.image.height} <br />
             Alt: {props.image.alt}<br />
+            Used by: {clients.join(', ')}
           </p>
+          <button
+            onClick={() => props.onEdit(props.image)}
+            className='btn btn-outline-warning mr-3'>
+            Edit
+          </button>
+          <button
+            onClick={() => props.onDelete(props.image.id)}
+            className='btn btn-outline-danger'>
+            Delete
+          </button>
         </div>
         <div className='col-md-9'>
           <ReactMarkdown source={props.image.notes} />
@@ -55,20 +68,8 @@ const Image = (props) => {
         <h3>Variants</h3>
         {variantActions}
         {variantList}
-        <strong>Has variants for these clients</strong> {otherClientsList}
       </div>
-      <div className='mb-3'>
-        <button
-          onClick={() => props.onEdit(props.image)}
-          className='btn btn-outline-warning mr-3'>
-          Edit
-        </button>
-        <button
-          onClick={() => props.onDelete(props.image.id)}
-          className='btn btn-outline-danger'>
-          Delete
-        </button>
-      </div>
+      <h3 className='mb-3'>Original uploaded Image</h3>
       <img src={props.image.url} alt={props.image.alt} className='img img-fluid'/>
     </React.Fragment>
   )

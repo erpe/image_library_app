@@ -25,9 +25,15 @@ const ImageCard = (props) => {
     }
   }
 
+  const variantMap = {}
+  img.variants.forEach(v => {
+    variantMap[v.client] = v
+  })
+  const clients = Object.keys(variantMap).filter(c => c !== '_internal')
+
   return(
     <div className='card bg-dark shadow'
-        onClick={ () => { setIsVisible(!isVisible)}}>
+         onClick={ () => { setIsVisible(!isVisible)}}>
 
       <img src={extractVersionUrl(props.version)} alt={img.alt} className='card-img-top' />
 
@@ -37,20 +43,21 @@ const ImageCard = (props) => {
           <p className='card-text'>
             <small>
               { img.category } <br />
-              &copy; {img.copyright} <br />
-              { img.url }
+    &copy; {img.copyright} <br />
+    { img.url }<br/>
+    Used by: { clients.join(", ") }
             </small>
           </p>
           <button onClick={ () => props.onShow(img)}
-            className='btn btn-sm btn-outline-primary btn-block'>
+                  className='btn btn-sm btn-outline-primary btn-block'>
             Show
           </button>
           <button onClick={ () => props.onEdit(img)}
-            className='btn btn-sm btn-outline-warning btn-block'>
+                  className='btn btn-sm btn-outline-warning btn-block'>
             Edit
           </button>
           <button onClick={ () => props.onDelete(img.id) }
-            className='btn btn-sm btn-outline-danger btn-block'>
+                  className='btn btn-sm btn-outline-danger btn-block'>
             Delete
           </button>
         </div>

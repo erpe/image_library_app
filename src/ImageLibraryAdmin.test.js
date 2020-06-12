@@ -13,7 +13,7 @@ test('renders ImageLibaryAdmin', () => {
       token={'123456'}/>
   )
 
-  const ele = getByText(/What client/i)
+  const ele = getByText(/As which client/i)
   expect(ele).toBeInTheDocument
 })
 
